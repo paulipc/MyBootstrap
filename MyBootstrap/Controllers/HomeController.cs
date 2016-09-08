@@ -26,5 +26,10 @@ namespace MyBootstrap.Controllers
 
             return View();
         }
+        public ActionResult bootstrap()
+        {
+            return View();
+        }
+
     }
 }
