@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MyBootstrap.Database;
+using MyBootstrap.Models;
 
 namespace MyBootstrap.Controllers
 {
@@ -28,6 +30,18 @@ namespace MyBootstrap.Controllers
         }
         public ActionResult bootstrap()
         {
+            var context = new alytaloEntities();
+
+            var query = from talo in context.Talo
+                           where talo.TaloId == 1
+                           select talo;
+
+            var setalo = query.FirstOrDefault();
+
+            ViewBag.talo = setalo.TaloId;
+
+            //Console.WriteLine("taloid: " + setalo.TaloId);
+
             return View();
         }
 

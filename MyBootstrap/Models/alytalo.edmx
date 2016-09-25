@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="alytaloModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Sauna">
+          <Key>
+            <PropertyRef Name="SaunaId" />
+          </Key>
+          <Property Name="SaunaId" Type="int" Nullable="false" />
+          <Property Name="TaloId" Type="int" Nullable="false" />
+          <Property Name="Lampotila" Type="float" />
+          <Property Name="SaunaPaalla" Type="bit" />
+        </EntityType>
+        <EntityType Name="Talo">
+          <Key>
+            <PropertyRef Name="TaloId" />
+          </Key>
+          <Property Name="TaloId" Type="int" Nullable="false" />
+          <Property Name="NykyLampo" Type="float" />
+          <Property Name="TavoiteLampo" Type="float" />
+        </EntityType>
+        <EntityType Name="Valo">
+          <Key>
+            <PropertyRef Name="ValoId" />
+          </Key>
+          <Property Name="ValoId" Type="int" Nullable="false" />
+          <Property Name="TaloId" Type="int" Nullable="false" />
+          <Property Name="ValonMaara" Type="float" />
+          <Property Name="ValoPaalla" Type="bit" />
+        </EntityType>
+        <EntityContainer Name="alytaloModelStoreContainer">
+          <EntitySet Name="Sauna" EntityType="Self.Sauna" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Talo" EntityType="Self.Talo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Valo" EntityType="Self.Valo" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="alytaloModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Sauna">
+          <Key>
+            <PropertyRef Name="SaunaId" />
+          </Key>
+          <Property Name="SaunaId" Type="Int32" Nullable="false" />
+          <Property Name="TaloId" Type="Int32" Nullable="false" />
+          <Property Name="Lampotila" Type="Double" />
+          <Property Name="SaunaPaalla" Type="Boolean" />
+          <NavigationProperty Name="Talo" Relationship="alytaloModel.TaloSauna" FromRole="Sauna" ToRole="Talo" />
+          <Property Name="Kuvaus" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Talo">
+          <Key>
+            <PropertyRef Name="TaloId" />
+          </Key>
+          <Property Name="TaloId" Type="Int32" Nullable="false" />
+          <Property Name="NykyLampo" Type="Double" />
+          <Property Name="TavoiteLampo" Type="Double" />
+          <NavigationProperty Name="Sauna" Relationship="alytaloModel.TaloSauna" FromRole="Talo" ToRole="Sauna" />
+          <NavigationProperty Name="Valo" Relationship="alytaloModel.TaloValo" FromRole="Talo" ToRole="Valo" />
+          <Property Name="Kuvaus" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Valo">
+          <Key>
+            <PropertyRef Name="ValoId" />
+          </Key>
+          <Property Name="ValoId" Type="Int32" Nullable="false" />
+          <Property Name="TaloId" Type="Int32" Nullable="false" />
+          <Property Name="ValonMaara" Type="Double" />
+          <Property Name="ValoPaalla" Type="Boolean" />
+          <NavigationProperty Name="Talo" Relationship="alytaloModel.TaloValo" FromRole="Valo" ToRole="Talo" />
+          <Property Name="Kuvaus" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="alytaloEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Sauna" EntityType="Self.Sauna" />
+          <EntitySet Name="Talo" EntityType="Self.Talo" />
+          <EntitySet Name="Valo" EntityType="Self.Valo" />
+          <AssociationSet Name="TaloSauna" Association="alytaloModel.TaloSauna">
+            <End Role="Talo" EntitySet="Talo" />
+            <End Role="Sauna" EntitySet="Sauna" />
+          </AssociationSet>
+          <AssociationSet Name="TaloValo" Association="alytaloModel.TaloValo">
+            <End Role="Talo" EntitySet="Talo" />
+            <End Role="Valo" EntitySet="Valo" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="TaloSauna">
+          <End Type="alytaloModel.Talo" Role="Talo" Multiplicity="1" />
+          <End Type="alytaloModel.Sauna" Role="Sauna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Talo">
+              <PropertyRef Name="TaloId" />
+            </Principal>
+            <Dependent Role="Sauna">
+              <PropertyRef Name="TaloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TaloValo">
+          <End Type="alytaloModel.Talo" Role="Talo" Multiplicity="1" />
+          <End Type="alytaloModel.Valo" Role="Valo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Talo">
+              <PropertyRef Name="TaloId" />
+            </Principal>
+            <Dependent Role="Valo">
+              <PropertyRef Name="TaloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="alytaloModelStoreContainer" CdmEntityContainer="alytaloEntities">
+          <EntitySetMapping Name="Sauna">
+            <EntityTypeMapping TypeName="alytaloModel.Sauna">
+              <MappingFragment StoreEntitySet="Sauna">
+                <ScalarProperty Name="SaunaId" ColumnName="SaunaId" />
+                <ScalarProperty Name="TaloId" ColumnName="TaloId" />
+                <ScalarProperty Name="Lampotila" ColumnName="Lampotila" />
+                <ScalarProperty Name="SaunaPaalla" ColumnName="SaunaPaalla" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Talo">
+            <EntityTypeMapping TypeName="alytaloModel.Talo">
+              <MappingFragment StoreEntitySet="Talo">
+                <ScalarProperty Name="TaloId" ColumnName="TaloId" />
+                <ScalarProperty Name="NykyLampo" ColumnName="NykyLampo" />
+                <ScalarProperty Name="TavoiteLampo" ColumnName="TavoiteLampo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Valo">
+            <EntityTypeMapping TypeName="alytaloModel.Valo">
+              <MappingFragment StoreEntitySet="Valo">
+                <ScalarProperty Name="ValoId" ColumnName="ValoId" />
+                <ScalarProperty Name="TaloId" ColumnName="TaloId" />
+                <ScalarProperty Name="ValonMaara" ColumnName="ValonMaara" />
+                <ScalarProperty Name="ValoPaalla" ColumnName="ValoPaalla" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

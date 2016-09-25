@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Test";
+}
+@section scripts {
+    <script src="~/Scripts/Logic.js"></script>
+
+    <script>
+        $(function () {
+            initTaloAssignment();
+        })
+    </script>
+}
+<h2>Test Json Interface</h2>
+
+<p>
+    <input id="NykyLampo" type="text" placeholder="nyky lampo" />
+</p>
+
+<p>
+    <input id="TavoiteLampo" type="text" placeholder="tavoite lampo" />
+</p>
+
+<button id="AssignTaloButton" class="btn">
+    Assign Talo
+</button>

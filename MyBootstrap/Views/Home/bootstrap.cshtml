@@ -3,6 +3,9 @@
     ViewBag.Title = "bootstrap";
 }
 
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
 
 @*<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -24,7 +27,43 @@
     </div>
 </div>*@
 
-<input type="text" class="form-control" />
-<input type="submit" class="btn" value="submit"/>
+<p>talo id: </p><input type="text" class="form-control" id="taloid" /><br />
+<p>lämpö  : </p><input type="text" class="form-control" id="lampo" /><br />
+<p>tavoite lämpö  : </p><input type="text" class="form-control" id="tavlampo"/><br />
 
+<input type="submit" class="btn" value="submit"/><br />
 
+@ViewBag.talo
+@*<script type="text/javascript">
+$.ajax({
+    type: "POST",
+    url: '@Url.Action("FirstAjax", "AjaxTest")',
+    contentType: "application/json; charset=utf-8",
+    data: { a: "testing" },
+    dataType: "json",
+    success: function() { alert('Success'); },
+    error: errorFunc
+});
+</script>*@
+
+@*@if (Model.Talo != null)
+{
+    <h3>Kaikki talot</h3>
+    <table>
+        <tr>
+            <th>taloid</th>
+            <th>lampo</th>
+        </tr>
+        @foreach (var item in Model.Talo)
+        {
+            <tr>
+                <td>
+                    @item.Talo.TaloId
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaloId)
+                </td>
+            </tr>
+        }
+    </table>
+}*@

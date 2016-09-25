@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MyBootstrap.Models
+namespace MyBootstrap.Database
 {
     public class ExternalLoginConfirmationViewModel
     {
